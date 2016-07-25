@@ -19,11 +19,11 @@ namespace TestScaningSystem.DataAccess
         public Excel.Workbook xlWorkBook;
         public Excel.Worksheet xlWorkSheet;
         public Excel.Range xlRange;
+        public int worksheet = 0;
         public ExcelAccess(string fileName)
         {
             FileName = fileName;
             xlApp = new Excel.Application();
-            OpenExcelConnection();
         }
         
         public void OpenExcelConnection()
@@ -38,6 +38,7 @@ namespace TestScaningSystem.DataAccess
         #region GetSheetNames
         public string[] GetSheetNames()
         {
+            OpenExcelConnection();
             int amountOfSheets = xlWorkBook.Worksheets.Count;
             string[] sheetNames = new string[amountOfSheets];
             int i = 0;
@@ -47,6 +48,7 @@ namespace TestScaningSystem.DataAccess
                 sheetNames[i] = item.Name;
                 i++;
             }
+            CloseExcelConnection();
             return sheetNames;
         }
         #endregion
@@ -54,8 +56,10 @@ namespace TestScaningSystem.DataAccess
         #region GetVenueNames
         public List<string> GetVenueNames(int workSheet)
         {
+            OpenExcelConnection();
             //Sets which worksheet has to be worked on
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Sheets[workSheet + 1];
+            worksheet = workSheet + 1;
             xlRange = xlWorkSheet.UsedRange;
 
             int rowCount = xlRange.Rows.Count;
@@ -88,6 +92,7 @@ namespace TestScaningSystem.DataAccess
                 }
             }
             //Returns the list of venue names
+            CloseExcelConnection();
             return venueNames;            
         }
         #endregion
@@ -95,6 +100,9 @@ namespace TestScaningSystem.DataAccess
         #region GetStudentByClass
         public List<string> GetStudentsByClass(string venue)
         {
+            OpenExcelConnection();
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Sheets[worksheet];
+            xlRange = xlWorkSheet.UsedRange;
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
@@ -133,6 +141,7 @@ namespace TestScaningSystem.DataAccess
                 }
             }
             //Returns the list of students
+            CloseExcelConnection();
             return students;
         } 
         #endregion
