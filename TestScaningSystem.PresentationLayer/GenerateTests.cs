@@ -35,14 +35,9 @@ namespace TestScaningSystem.PresentationLayer
                     edtlocation.Text = openFileDialog1.FileName;
                     //Creates a Data Handler object
                     dh = new DataHandeler(edtlocation.Text);
-                    //Creates an array an inputs the information returned by GetSheetNames()
-                    string[] sheetNames = dh.GetSheetNames();
-                    //Adds the sheet names to the combox
-                    for (int i = 0; i < sheetNames.Length; i++)
-                    {
-                        comboBox2.Items.Add(sheetNames[i]);
-                    }
-                    comboBox2.Enabled = true;
+                    
+                    gbSelectPrintType.Enabled = true;
+                    
                 }
                 else
                 {
@@ -165,7 +160,7 @@ namespace TestScaningSystem.PresentationLayer
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            groupBox1.Enabled = true;
+            gbPaperType.Enabled = true;
             button1.Enabled = true;
             dateTimePicker1.Enabled = true;
         }
@@ -191,6 +186,68 @@ namespace TestScaningSystem.PresentationLayer
             else
             {
                 numericUpDown2.Enabled = false;
+            }
+        }
+
+        private void rbWholeClass_CheckedChanged(object sender, EventArgs e)
+        {
+            gbGenerateqrcode.Enabled = true;
+            gbPrintIndividualTest.Enabled = false;
+            //Creates an array an inputs the information returned by GetSheetNames()
+            string[] sheetNames = dh.GetSheetNames();
+            //Adds the sheet names to the combox
+            for (int i = 0; i < sheetNames.Length; i++)
+            {
+                comboBox2.Items.Add(sheetNames[i]);
+            }
+            comboBox2.Enabled = true;
+        }
+
+        private void rbIndividual_CheckedChanged(object sender, EventArgs e)
+        {
+            gbPrintIndividualTest.Enabled = true;
+            gbGenerateqrcode.Enabled = false;
+            //Creates an array an inputs the information returned by GetSheetNames()
+            string[] sheetNames = dh.GetSheetNames();
+            //Adds the sheet names to the combox
+            for (int i = 0; i < sheetNames.Length; i++)
+            {
+                cbISubject.Items.Add(sheetNames[i]);
+            }
+            cbISubject.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbISubject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<string> venueNames = new List<string>();
+            cbIClass.Items.Clear();
+            //Creates a list that is filled by the venues returned by GetVenueNames()
+            venueNames = dh.GetVenueNames(comboBox2.SelectedIndex);
+            //Adds the venues stored in the list to the combobox
+            foreach (string item in venueNames)
+            {
+                if (item != null)
+                {
+                    cbIClass.Items.Add(item);
+                }
+
+            }
+            cbIClass.Enabled = true;
+        }
+
+        private void cbIClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Fills the List<Student> with the students returned by GetStudentByClass()
+            students = dh.GetStudentsByClass(cbIClass.SelectedItem.ToString(), cbISubject.SelectedItem.ToString());
+            foreach (Student student in students)
+            {
+                string name = student.FirstName + " " + student.Surname;
+                cbStudentNames.Items.Add(name);
             }
         }
     }
