@@ -23,6 +23,7 @@ namespace TestScaningSystem.DataAccess
         {
             FileName = fileName;
             xlApp = new Excel.Application();
+            OpenExcelConnection();
         }
         
         public void OpenExcelConnection()
@@ -66,7 +67,7 @@ namespace TestScaningSystem.DataAccess
             //Iterates through the worksheet and gets the venue names
             for (int i = 2; i <= rowCount; i++)
             {
-                for (int j = colCount; j <= colCount; j++)
+                for (int j = 4; j <= 4; j++)
                 {
                     string temp = (string)(xlRange.Cells[i, j] as Excel.Range).Value2;
                     
