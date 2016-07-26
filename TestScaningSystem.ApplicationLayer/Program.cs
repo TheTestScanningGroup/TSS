@@ -26,7 +26,7 @@ namespace TestScaningSystem.ApplicationLayer
         }
         static void TempleteCreater()
         {
-            string[] Templete = new string[5];
+            string[] Templete = new string[1];
 
             Templete[0] = "Lined Answer Sheet.dotx";
             //Templete[1] = "Grid Answer Sheet.dotx";
@@ -51,9 +51,11 @@ namespace TestScaningSystem.ApplicationLayer
                 {
                     File.Delete(item);
                 }
+                
                 foreach (string item in Templete)
                 {
-                    File.Copy(item, string.Format("{0}{1}", MainDirectory, item));
+                    string path = string.Format("{0}{1}", MainDirectory, item);
+                    File.Copy(item, path);
                 }
             }
         }

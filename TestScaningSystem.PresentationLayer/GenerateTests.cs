@@ -21,6 +21,25 @@ namespace TestScaningSystem.PresentationLayer
         DataHandeler dh;
         DocumentHandler doch = new DocumentHandler();
         List<Student> students = new List<Student>();
+        private void showBalloon(string title, string body)
+        {
+            NotifyIcon notifyIcon = new NotifyIcon();
+            notifyIcon.Visible = true;
+
+            if (title != null)
+            {
+                notifyIcon.BalloonTipTitle = title;
+            }
+
+            if (body != null)
+            {
+                notifyIcon.BalloonTipText = body;
+            }
+            notifyIcon.Icon = SystemIcons.Application;
+            notifyIcon.ShowBalloonTip(30000);
+            notifyIcon.Dispose();
+
+        }
         private void btnbrowse_Click(object sender, EventArgs e)
         {
             comboBox2.Items.Clear();
@@ -29,9 +48,11 @@ namespace TestScaningSystem.PresentationLayer
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
+
                 string name = openFileDialog1.FileName;
                 if (name.EndsWith(".xls") || name.EndsWith(".xlsx") || name.EndsWith(".xlsm"))
                 {
+                    showBalloon("Populating", "Please wait while we populate your subjects ");
                     edtlocation.Text = openFileDialog1.FileName;
                     //Creates a Data Handler object
                     dh = new DataHandeler(edtlocation.Text);
@@ -43,6 +64,7 @@ namespace TestScaningSystem.PresentationLayer
                         comboBox2.Items.Add(sheetNames[i]);
                     }
                     comboBox2.Enabled = true;
+
                 }
                 else
                 {
@@ -52,12 +74,14 @@ namespace TestScaningSystem.PresentationLayer
                         btnbrowse_Click(sender, e);
                     }
                 }
+                
 
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            showBalloon("Populating", "Please wait while we populate the list of venues");
             List<string> venueNames = new List<string>();
             comboBox3.Items.Clear();
             //Creates a list that is filled by the venues returned by GetVenueNames()

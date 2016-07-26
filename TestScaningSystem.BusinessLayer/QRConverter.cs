@@ -46,7 +46,7 @@ namespace TestScaningSystem.BusinessLayer
                     //Puts the information needed in a specific format to be stored in
                     AllDataString = string.Format("{0};{1};{2};{3};{4};{5}", student.IDNumber, student.Surname, student.FirstName, student.ClassID, student.Subject, testDate);
                     //Generates the QR Code
-                    QrCode = medium.Encode(Error_Correction.L, Encode_Mode.BYTE, 1, 7, AllDataString);
+                    QrCode = medium.Encode(Error_Correction.L, Encode_Mode.BYTE, 2, 7, AllDataString);
                     //Stores the QR Code in the image list
                     listOfQRCodes.Add(QrCode);
                 }
