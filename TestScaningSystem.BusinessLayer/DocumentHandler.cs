@@ -40,7 +40,7 @@ namespace TestScaningSystem.BusinessLayer
         #region GenerateDocument
         public void GenerateDocument(TempleteType TT, Student student, string qrCodePath, string amountOfCopies,DateTime Date)
         {
-            MessageFilter.Register();
+           // MessageFilter.Register();
             Object oMissing = System.Reflection.Missing.Value;
             Object oTrue = true;
             Object oFalse = false;
@@ -121,30 +121,32 @@ namespace TestScaningSystem.BusinessLayer
                     item.Delete();
                 }
             }
+
             //Replace existing image in Template
             foreach (Word.Range item in ranges)
             {
-                item.InlineShapes.AddPicture(qrCodePath, ref oMissing, ref oMissing, ref oMissing);
+                //item.InlineShapes.AddPicture(qrCodePath);
+                item.InlineShapes.AddPicture(qrCodePath, oMissing, oMissing, item);
             }
 
             //Creates a document based on the templete selected
-            oWordDoc = oWord.Documents.Add(ref oTemplate);
+            //oWordDoc = oWord.Documents.Add(ref oTemplate);
 
             ////Sets where the QR Code is going to sit
             //object start = 20;
             //object end = 23;
             //Word.Range rng = oWordDoc.Range(ref start, ref end);
             //rng.InlineShapes.AddPicture(qrCodePath);
-            
+
             //start = 195;
             //end = 198;
             //rng = oWordDoc.Range(ref start, ref end);
             ////Places the QR Code
             //rng.InlineShapes.AddPicture(qrCodePath);
-            
-            
+
+
             //Settings for how the document needs to be printed
-            
+
             object copies = amountOfCopies;
             object pages = "";
             object range = Word.WdPrintOutRange.wdPrintAllDocument;
@@ -153,7 +155,8 @@ namespace TestScaningSystem.BusinessLayer
 
             //Prints the document
             oWordDoc.PrintOut(oTrue, oFalse, range, oMissing, oMissing, oMissing, items, copies, oMissing, pageType, oFalse, oTrue, oMissing, oFalse, oMissing, oMissing, oMissing, oMissing);
-            MessageFilter.Revoke();
+            //MessageFilter.Revoke();
+            //oWord.Quit(false);
         } 
         #endregion
     }    
