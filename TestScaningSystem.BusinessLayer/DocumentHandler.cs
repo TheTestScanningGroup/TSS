@@ -38,7 +38,7 @@ namespace TestScaningSystem.BusinessLayer
         #endregion
 
         #region GenerateDocument
-        public void GenerateDocument(TempleteType TT, Student student, string qrCodePath, string amountOfCopies)
+        public void GenerateDocument(TempleteType TT, Student student, string qrCodePath, string amountOfCopies,DateTime Date)
         {
             MessageFilter.Register();
             Object oMissing = System.Reflection.Missing.Value;
@@ -71,20 +71,76 @@ namespace TestScaningSystem.BusinessLayer
                     oTemplate = @"C:\TestScannigSystem\Crossword Answer Sheet.dotx";
                     break;
             }
+            oWordDoc = oWord.Documents.Add(ref oTemplate, ref oMissing, ref oMissing, ref oMissing);
+            int iTotalFields = 0;
+            //Replaces Field info in templete with student Details
+            foreach (Word.Field myMergeField in oWordDoc.Fields)
+            {
+                iTotalFields++;
+                Word.Range rngFieldCode = myMergeField.Code;
+                String fieldText = rngFieldCode.Text;
+                if (fieldText.StartsWith(" MERGEFIELD"))
+                {
+                    Int32 endMerge = fieldText.IndexOf("\\");
+                    Int32 fieldNameLength = fieldText.Length - endMerge;
+                    String fieldName = fieldText.Substring(11, endMerge - 11);
+                    fieldName = fieldName.Trim();
+                    switch (fieldName)
+                    {
+                        case "Name":
+                            myMergeField.Select();
+                            oWord.Selection.TypeText(student.FirstName);
+                            break;
+                        case "Surname":
+                            myMergeField.Select();
+                            oWord.Selection.TypeText(student.Surname);
+                            break;
+                        case "ID_Number":
+                            myMergeField.Select();
+                            oWord.Selection.TypeText(student.IDNumber.ToString());
+                            break;
+                        case "Subject":
+                            myMergeField.Select();
+                            oWord.Selection.TypeText(student.Subject);
+                            break;
+                        case "Date":
+                            myMergeField.Select();
+                            //Please confirm Date input
+                            oWord.Selection.TypeText(Date.ToShortDateString());
+                            break;
+                    }
+                }
+            }
+            //Get existing image in Template
+            List<Word.Range> ranges = new List<Word.Range>();
+            foreach (Word.InlineShape item in oWordDoc.InlineShapes)
+            {
+                if (item.Type == Word.WdInlineShapeType.wdInlineShapePicture)
+                {
+                    ranges.Add(item.Range);
+                    item.Delete();
+                }
+            }
+            //Replace existing image in Template
+            foreach (Word.Range item in ranges)
+            {
+                item.InlineShapes.AddPicture(qrCodePath, ref oMissing, ref oMissing, ref oMissing);
+            }
+
             //Creates a document based on the templete selected
             oWordDoc = oWord.Documents.Add(ref oTemplate);
 
-            //Sets where the QR Code is going to sit
-            object start = 20;
-            object end = 23;
-            Word.Range rng = oWordDoc.Range(ref start, ref end);
-            rng.InlineShapes.AddPicture(qrCodePath);
+            ////Sets where the QR Code is going to sit
+            //object start = 20;
+            //object end = 23;
+            //Word.Range rng = oWordDoc.Range(ref start, ref end);
+            //rng.InlineShapes.AddPicture(qrCodePath);
             
-            start = 195;
-            end = 198;
-            rng = oWordDoc.Range(ref start, ref end);
-            //Places the QR Code
-            rng.InlineShapes.AddPicture(qrCodePath);
+            //start = 195;
+            //end = 198;
+            //rng = oWordDoc.Range(ref start, ref end);
+            ////Places the QR Code
+            //rng.InlineShapes.AddPicture(qrCodePath);
             
             
             //Settings for how the document needs to be printed

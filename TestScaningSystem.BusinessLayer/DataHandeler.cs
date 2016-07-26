@@ -20,10 +20,22 @@ namespace TestScaningSystem.BusinessLayer
     {
         ExcelAccess ea;
         DatabaseAccess da;
+        public DataHandeler()
+        {
+            da = new DatabaseAccess();
+        }
         public DataHandeler(string filePath)
         {
             ea = new ExcelAccess(filePath);
             da = new DatabaseAccess();
+        }
+        public bool Login(string username, string password)
+        {
+            
+
+
+
+            return da.Login();
         }
         public string[] GetSheetNames()
         {

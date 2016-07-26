@@ -130,27 +130,27 @@ namespace TestScaningSystem.PresentationLayer
                     {
                         if (lineChecked == true)
                         {
-                            doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         if (trueFalseChecked == true)
                         {
-                            //doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            //doch.GenerateDocument(DocumentHandler.TempleteType.Crossword, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         if (monkeyChecked == true)
                         {
-                            //doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            //doch.GenerateDocument(DocumentHandler.TempleteType.Grid, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         if (matchABChecked == true)
                         {
-                            //doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            //doch.GenerateDocument(DocumentHandler.TempleteType.MatchAB, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         if (gridChecked == true)
                         {
-                            //doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            //doch.GenerateDocument(DocumentHandler.TempleteType.Monkey, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         if (crosswordChecked == true)
                         {
-                            //doch.GenerateDocument(DocumentHandler.TempleteType.Lined, student, qrCodePaths[counter], numericUpDown1.Value.ToString());
+                            //doch.GenerateDocument(DocumentHandler.TempleteType.TrueFalse, student, qrCodePaths[counter], numericUpDown1.Value.ToString(),dateTimePicker1.Value);
                         }
                         counter++;
                     }
