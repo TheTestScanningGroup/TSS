@@ -53,7 +53,7 @@ namespace TestScaningSystem.ApplicationLayer
                 }
                 foreach (string item in Templete)
                 {
-                    File.Copy(item, string.Format("{0}{1}", MainDirectory, item));
+                   // File.Copy(item, string.Format("{0}{1}", MainDirectory, item));
                 }
             }
         }
