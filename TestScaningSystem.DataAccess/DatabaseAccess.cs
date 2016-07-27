@@ -48,5 +48,10 @@ namespace TestScaningSystem.DataAccess
                 conn.Close();
             }
         }
+
+        public bool Login()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

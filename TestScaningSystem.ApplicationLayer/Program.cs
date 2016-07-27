@@ -18,6 +18,7 @@ namespace TestScaningSystem.ApplicationLayer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GenerateTests());
+            //Application.Run(new Login());
         }
     }
 }
