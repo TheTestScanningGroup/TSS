@@ -22,14 +22,13 @@ namespace TestScaningSystem.PresentationLayer
         {
             Environment.Exit(0);
         }
-
+        DataHandeler DH = new DataHandeler();
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (txtUsername.Text != null && txtPassword.Text != null)
             {
                 string Username = txtUsername.Text;
                 string Password = txtPassword.Text;
-                DataHandeler DH = new DataHandeler();
                 if (DH.Login(Username, Password))
                 {
                     GenerateTests GT = new GenerateTests();
