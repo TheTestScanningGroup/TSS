@@ -27,16 +27,16 @@ namespace TestScaningSystem.BusinessLayer
             string[] arrPaths = new string[listOfQRCodes.Count];
             foreach (Student student in listOfStudents)
             {
-                string path = string.Format(@"C:\Tests\{0}{1}{2}{3}.jpeg", student.Surname, student.FirstName, student.ClassID, student.Venue);
+                string path = string.Format(@"C:\Student Codes\{0}{1}{2}{3}.jpeg", student.Surname, student.FirstName, student.ClassID, student.Venue);
                 listOfQRCodes[listCounter].Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
                 arrPaths[arrCounter] = path;
                 arrCounter++;
                 listCounter++;
             }
             return arrPaths;
-        } 
+        }
         #endregion
-
+        
         #region GenerateDocument
         public void GenerateDocument(TempleteType TT, Student student, string qrCodePath, string amountOfCopies,DateTime Date)
         {
@@ -125,28 +125,9 @@ namespace TestScaningSystem.BusinessLayer
             //Replace existing image in Template
             foreach (Word.Range item in ranges)
             {
-                //item.InlineShapes.AddPicture(qrCodePath);
                 item.InlineShapes.AddPicture(qrCodePath, oMissing, oMissing, item);
-            }
-
-            //Creates a document based on the templete selected
-            //oWordDoc = oWord.Documents.Add(ref oTemplate);
-
-            ////Sets where the QR Code is going to sit
-            //object start = 20;
-            //object end = 23;
-            //Word.Range rng = oWordDoc.Range(ref start, ref end);
-            //rng.InlineShapes.AddPicture(qrCodePath);
-
-            //start = 195;
-            //end = 198;
-            //rng = oWordDoc.Range(ref start, ref end);
-            ////Places the QR Code
-            //rng.InlineShapes.AddPicture(qrCodePath);
-
-
+            }        
             //Settings for how the document needs to be printed
-
             object copies = amountOfCopies;
             object pages = "";
             object range = Word.WdPrintOutRange.wdPrintAllDocument;
@@ -156,8 +137,11 @@ namespace TestScaningSystem.BusinessLayer
             //Prints the document
             oWordDoc.PrintOut(oTrue, oFalse, range, oMissing, oMissing, oMissing, items, copies, oMissing, pageType, oFalse, oTrue, oMissing, oFalse, oMissing, oMissing, oMissing, oMissing);
             //MessageFilter.Revoke();
-            //oWord.Quit(false);
-        } 
+            object doNotSaveChanges = Word.WdSaveOptions.wdDoNotSaveChanges;
+            oWord.Application.Quit(doNotSaveChanges);
+        }
         #endregion
+        
+        
     }    
 }

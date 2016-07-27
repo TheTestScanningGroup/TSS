@@ -26,14 +26,14 @@ namespace TestScaningSystem.ApplicationLayer
         }
         static void TempleteCreater()
         {
-            string[] Templete = new string[1];
+            string[] Templete = new string[6];
 
             Templete[0] = "Lined Answer Sheet.dotx";
-            //Templete[1] = "Grid Answer Sheet.dotx";
-            //Templete[2] = "True or False Answer Sheet.dotx";
-            //Templete[3] = "Monkey puzzle Answer Sheet.dotx";
-            //Templete[4] = "Match A to B Answer Sheet.dotx";
-            //Templete[5] = "Crossword Answer Sheet.dotx";
+            Templete[1] = "Grid Answer Sheet.dotx";
+            Templete[2] = "True or False Answer Sheet.dotx";
+            Templete[3] = "Monkey puzzle Answer Sheet.dotx";
+            Templete[4] = "Match A to B Answer Sheet.dotx";
+            Templete[5] = "Crossword Answer Sheet.dotx";
 
             string MainDirectory = @"C:\TestScannigSystem\";
             if (!Directory.Exists(MainDirectory))
@@ -43,6 +43,7 @@ namespace TestScaningSystem.ApplicationLayer
                 {
                     File.Copy(item, string.Format("{0}{1}", MainDirectory, item));
                 }
+                //MessageBox.Show("Templetes not found");
             }
             else
             {
@@ -51,12 +52,13 @@ namespace TestScaningSystem.ApplicationLayer
                 {
                     File.Delete(item);
                 }
-                
+
                 foreach (string item in Templete)
                 {
                     string path = string.Format("{0}{1}", MainDirectory, item);
                     File.Copy(item, path);
                 }
+
             }
         }
     }

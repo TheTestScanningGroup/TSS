@@ -31,11 +31,7 @@ namespace TestScaningSystem.BusinessLayer
         }
         public bool Login(string username, string password)
         {
-            
-
-
-
-            return da.Login();
+            return da.Login(username, password);
         }
         public string[] GetSheetNames()
         {
@@ -66,5 +62,7 @@ namespace TestScaningSystem.BusinessLayer
             
             return students;
         }
+
+        
     }
 }

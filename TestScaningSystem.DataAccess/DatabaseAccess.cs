@@ -22,6 +22,7 @@ namespace TestScaningSystem.DataAccess
             conn = new SqlConnection(@"Data Source=(local);Initial Catalog=QRTestingDB;Integrated Security=True");
         }
 
+        #region GetStudentID
         public long GetStudentID(string[] info)
         {
             try
@@ -47,11 +48,37 @@ namespace TestScaningSystem.DataAccess
             {
                 conn.Close();
             }
-        }
+        } 
+        #endregion
 
-        public bool Login()
+        public bool Login(string username, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                conn.Open();
+                query = string.Format("SELECT EmpID FROM tblEmployee WHERE EmpID = '{0}' AND EmpID ='{1}'", username, password);
+                command = new SqlCommand(query, conn);
+                adapter = new SqlDataAdapter(command);
+                dt = new DataTable();
+                adapter.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }
